@@ -24,25 +24,44 @@ archivo3 = os.path.join(lugar_del_archivo, "world_the_end.zip")
 def overworld():
     global drive
     lugar_del_archivo = os.path.dirname(os.path.abspath(__file__))
-    archivo1 = os.path.join(lugar_del_archivo, "world.zip")
+    archivo1 = os.path.join(lugar_del_archivo, "world1.zip")
+    archivo2 = os.path.join(lugar_del_archivo, "world2.zip")
+    archivo3 = os.path.join(lugar_del_archivo, "world.zip")
     try:
         os.remove(archivo1)
     except IOError:
         pass
     print("Descargando el overworld")
-    overworld = drive.CreateFile({'id': "1RJLIXvN8rPBE5qzC77WNHzRv89vvEr-6"})
-    overworld.GetContentFile(archivo1)
+    overworld1 = drive.CreateFile({'id': "1RJLIXvN8rPBE5qzC77WNHzRv89vvEr-6"})
+    overworld1.GetContentFile(archivo1)
+    overworld2 = drive.CreateFile({'id': "101mrvpCYNvTxHQjKry90-WnwFYnAJZbv"})
+    overworld2.GetContentFile(archivo2)
+
+    with open(archivo1, "rb") as f1_r:
+        mitad1 = f1_r.read()
+        with open(archivo3, "wb") as f2_w:
+            f2_w.write(mitad1)
+    
+    with open(archivo2, "rb") as f3_r:
+        mitad2 = f3_r.read()
+        with open(archivo3, "ab") as f4_w:
+            f4_w.write(mitad2)
+
     print("overworld descargado")
 
     def extraer():
         global lugar_del_archivo
+        global archivo3
         global archivo1
+        global archivo2
         print("extrayendo el overworld")
         archivo4 = os.path.join(lugar_del_archivo, "world")
         with zipfile.ZipFile("world.zip", 'r') as zip_ref:
             zip_ref.extractall(archivo4)
         try:
             os.remove(archivo1)
+            os.remove(archivo2)
+            os.remove(archivo3)
         except IOError:
             pass
         print("overworld extraido, se ha acabado el proceso del overworld")

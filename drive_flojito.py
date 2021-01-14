@@ -3,6 +3,9 @@ from pydrive.auth import GoogleAuth
 import threading
 import os
 import shutil
+import time
+
+
 
 
 gauth = GoogleAuth()
@@ -42,16 +45,55 @@ archivo_overworld = os.path.join(lugar_del_archivo, "world.zip")
 archivo_nether = os.path.join(lugar_del_archivo, "world_nether.zip")
 archivo_end = os.path.join(lugar_del_archivo, "world_the_end.zip")
 
-folder = drive.CreateFile({'id': "1RJLIXvN8rPBE5qzC77WNHzRv89vvEr-6"})
-folder.SetContentFile(archivo_overworld)
-folder.Upload()
+archivo_overworld1 = os.path.join(lugar_del_archivo, "world1.zip")
+archivo_overworld2 = os.path.join(lugar_del_archivo, "world2.zip")
+peso_overworld = os.path.getsize(archivo_overworld)
+chunk_peso = peso_overworld / 2
+chunk_peso_int = int(chunk_peso)
+with open(archivo_overworld, "rb") as f1_r:
+    chunk = f1_r.read(chunk_peso_int)
+    with open(archivo_overworld1, "wb") as f2_w:
+        f2_w.write(chunk)
+    chunk2 = f1_r.read(chunk_peso_int)
+    with open(archivo_overworld2, "wb") as f3_w:
+        f3_w.write(chunk2)
 
-folder = drive.CreateFile({'id': "1SxEsnVlStflTSPRUnQryBfqQAZHK_LSq"})
-folder.SetContentFile(archivo_nether)
-folder.Upload()
+def overworld1():
+    global archivo_overworld1
+    folder0 = drive.CreateFile({'id': "1RJLIXvN8rPBE5qzC77WNHzRv89vvEr-6"})
+    folder0.SetContentFile(archivo_overworld1)
+    folder0.Upload()
+    
+t_overworld1 = threading.Thread(target=overworld1)
+t_overworld1.start()
 
-folder = drive.CreateFile({'id': "1H5fSzKSYNf41lQiePPil3SduHOse-2V_"})
-folder.SetContentFile(archivo_end)
-folder.Upload()
+def overworld2():
+    global archivo_overworld2
+    folder1 = drive.CreateFile({'id': "101mrvpCYNvTxHQjKry90-WnwFYnAJZbv"})
+    folder1.SetContentFile(archivo_overworld2)
+    folder1.Upload()
+t_overworld2 = threading.Thread(target=overworld2)
+t_overworld2.start()
 
+
+def nether():
+    global archivo_nether
+    folder2 = drive.CreateFile({'id': "1SxEsnVlStflTSPRUnQryBfqQAZHK_LSq"})
+    folder2.SetContentFile(archivo_nether)
+    folder2.Upload()
+t_nether = threading.Thread(target=nether)
+t_nether.start()
+
+
+def end():
+    global archivo_end
+    folder3 = drive.CreateFile({'id': "1H5fSzKSYNf41lQiePPil3SduHOse-2V_"})
+    folder3.SetContentFile(archivo_end)
+    folder3.Upload()
+t_end = threading.Thread(target=end)
+t_end.start()
+
+
+final = time.perf_counter()
+print(final)
 
