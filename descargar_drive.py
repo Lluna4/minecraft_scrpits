@@ -5,6 +5,19 @@ import os
 import shutil
 import zipfile
 
+
+try:
+    with open("primer.txt", "r") as u_u:
+        u_u.read()
+except IOError:
+    print("Hola! Bienvenido el servidor, en este ejecutable esta todo lo que hay para abrir y cerrar el servidor sincronizandolo con Drive,\n para activar el plugin hay que poner /pyload main.py")
+    print("pulsa enter para seguir")
+    input()
+    with open("primer.txt", "w") as uu_uu:
+        uu_uu.write("HOLA, COMO HAS ENCONTRADO ESTO??????")
+
+
+
 gauth = GoogleAuth()
 gauth.LoadCredentialsFile("mycreds.txt")
 if gauth.credentials is None:
