@@ -4,17 +4,31 @@ import threading
 import os
 import shutil
 import zipfile
+import socket
 
 
 try:
     with open("primer.txt", "r") as u_u:
         u_u.read()
 except IOError:
-    print("Hola! Bienvenido el servidor, en este ejecutable esta todo lo que hay para abrir y cerrar el servidor sincronizandolo con Drive,\n para activar el plugin hay que poner /pyload main.py")
+    print("Hola! Bienvenido el servidor, en este ejecutable esta todo lo que hay para abrir y cerrar el servidor sincronizandolo con Drive,\n para activar el plugin hay que poner /pyload main.py, tambien se te ha puesto automaticamente tu ip")
     print("pulsa enter para seguir")
     input()
     with open("primer.txt", "w") as uu_uu:
         uu_uu.write("HOLA, COMO HAS ENCONTRADO ESTO??????")
+    ip = socket.gethostbyname(socket.gethostname())
+    with open("server.properties", "w") as ip_w:
+        ip_w.write(f"server-ip={ip}")
+        ip_w.write("\nspawn-protection=0")
+        diff = input("dificultad? (1 mas facil 3 mas difcil) ")
+        if diff == "1":
+            ip_w.write("\ndifficulty=easy")
+        if diff == "2":
+            ip_w.write("\ndifficulty=normal")
+        if diff == "3":
+            ip_w.write("\ndifficulty=hard")
+
+
 
 
 
