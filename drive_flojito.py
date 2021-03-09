@@ -48,35 +48,15 @@ archivo_overworld = os.path.join(lugar_del_archivo, "world.zip")
 archivo_nether = os.path.join(lugar_del_archivo, "world_nether.zip")
 archivo_end = os.path.join(lugar_del_archivo, "world_the_end.zip")
 
-archivo_overworld1 = os.path.join(lugar_del_archivo, "world1.zip")
-archivo_overworld2 = os.path.join(lugar_del_archivo, "world2.zip")
-peso_overworld = os.path.getsize(archivo_overworld)
-chunk_peso = peso_overworld / 2
-chunk_peso_int = int(chunk_peso)
-with open(archivo_overworld, "rb") as f1_r:
-    chunk = f1_r.read(chunk_peso_int)
-    with open(archivo_overworld1, "wb") as f2_w:
-        f2_w.write(chunk)
-    chunk2 = f1_r.read(chunk_peso_int)
-    with open(archivo_overworld2, "wb") as f3_w:
-        f3_w.write(chunk2)
 
-def overworld1():
-    global archivo_overworld1
-    print("subiendo el primer trozo del overworld")
-    folder0 = drive.CreateFile({'id': "1RJLIXvN8rPBE5qzC77WNHzRv89vvEr-6"})
-    folder0.SetContentFile(archivo_overworld1)
-    folder0.Upload()
-    print("el primer trozo del overworld se ha subido")
-    
-t_overworld1 = threading.Thread(target=overworld1)
-t_overworld1.start()
 
 def overworld2():
-    global archivo_overworld2
-    print("subiendo el segundo trozo del overworld")
-    folder1 = drive.CreateFile({'id': "101mrvpCYNvTxHQjKry90-WnwFYnAJZbv"})
-    folder1.SetContentFile(archivo_overworld2)
+    global archivo_overworld
+    print("subiendo el overworld")
+    with open("world_id.txt", "r") as w:
+        id1 = w.read()
+    folder1 = drive.CreateFile({'id': id1})
+    folder1.SetContentFile(archivo_overworld)
     folder1.Upload()
     print("El segundo trozo del overworld se ha subido")
 t_overworld2 = threading.Thread(target=overworld2)
@@ -86,7 +66,9 @@ t_overworld2.start()
 def nether():
     global archivo_nether
     print("subiendo el nether")
-    folder2 = drive.CreateFile({'id': "1SxEsnVlStflTSPRUnQryBfqQAZHK_LSq"})
+    with open("world_nether_id.txt", "r") as w:
+        id2 = w.read()
+    folder2 = drive.CreateFile({'id': id2})
     folder2.SetContentFile(archivo_nether)
     folder2.Upload()
     print("nether subido")
@@ -97,7 +79,9 @@ t_nether.start()
 def end():
     global archivo_end
     print("subiendo el end")
-    folder3 = drive.CreateFile({'id': "1H5fSzKSYNf41lQiePPil3SduHOse-2V_"})
+    with open("world_the_end_id.txt", "r") as w:
+        id3 = w.read()
+    folder3 = drive.CreateFile({'id': id3})
     folder3.SetContentFile(archivo_end)
     folder3.Upload()
     print("end subido")

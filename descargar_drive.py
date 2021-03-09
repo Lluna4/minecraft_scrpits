@@ -7,26 +7,6 @@ import zipfile
 import socket
 
 
-try:
-    with open("primer.txt", "r") as u_u:
-        u_u.read()
-except IOError:
-    print("Hola! Bienvenido el servidor, en este ejecutable esta todo lo que hay para abrir y cerrar el servidor sincronizandolo con Drive,\n para activar el plugin hay que poner /pyload main.py, tambien se te ha puesto automaticamente tu ip")
-    print("pulsa enter para seguir")
-    input()
-    with open("primer.txt", "w") as uu_uu:
-        uu_uu.write("HOLA, COMO HAS ENCONTRADO ESTO??????")
-    ip = socket.gethostbyname(socket.gethostname())
-    with open("server.properties", "w") as ip_w:
-        ip_w.write(f"server-ip={ip}")
-        ip_w.write("\nspawn-protection=0")
-        diff = input("dificultad? (1 mas facil 3 mas difcil) ")
-        if diff == "1":
-            ip_w.write("\ndifficulty=easy")
-        if diff == "2":
-            ip_w.write("\ndifficulty=normal")
-        if diff == "3":
-            ip_w.write("\ndifficulty=hard")
 
 
 
@@ -59,20 +39,12 @@ def overworld():
     except IOError:
         pass
     print("Descargando el overworld")
-    overworld1 = drive.CreateFile({'id': "1RJLIXvN8rPBE5qzC77WNHzRv89vvEr-6"})
+    with open("world_id.txt", "r") as w:
+        id1 = w.read()
+    overworld1 = drive.CreateFile({'id': id1})
     overworld1.GetContentFile(archivo1)
-    overworld2 = drive.CreateFile({'id': "101mrvpCYNvTxHQjKry90-WnwFYnAJZbv"})
-    overworld2.GetContentFile(archivo2)
 
-    with open(archivo1, "rb") as f1_r:
-        mitad1 = f1_r.read()
-        with open(archivo3, "wb") as f2_w:
-            f2_w.write(mitad1)
-    
-    with open(archivo2, "rb") as f3_r:
-        mitad2 = f3_r.read()
-        with open(archivo3, "ab") as f4_w:
-            f4_w.write(mitad2)
+
 
     print("overworld descargado")
 
@@ -105,7 +77,9 @@ def nether():
     except IOError:
         pass
     print("descargando el nether")
-    nether = drive.CreateFile({'id': "1SxEsnVlStflTSPRUnQryBfqQAZHK_LSq"})
+    with open("world_nether_id.txt", "r") as w:
+        id2 = w.read()
+    nether = drive.CreateFile({'id': id2})
     nether.GetContentFile(archivo2)
     print("nether descargado")
     def extraer():
@@ -132,7 +106,9 @@ def the_end():
     except IOError:
         pass
     print("descargando el end")
-    end = drive.CreateFile({'id': "1H5fSzKSYNf41lQiePPil3SduHOse-2V_"})
+    with open("world_the_end_id.txt", "r") as w:
+        id3 = w.read()
+    end = drive.CreateFile({'id': id3})
     end.GetContentFile(archivo3)
     print("end descargado")
     
