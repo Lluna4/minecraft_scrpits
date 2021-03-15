@@ -13,7 +13,7 @@ import socket
 
 
 gauth = GoogleAuth()
-gauth.LoadCredentialsFile("mycreds.txt")
+gauth.LoadCredentialsFile("DBCRD.txt")
 if gauth.credentials is None:
     gauth.LocalWebserverAuth()
 elif gauth.access_token_expired:
@@ -21,7 +21,7 @@ elif gauth.access_token_expired:
 else:
     gauth.Authorize()
 
-gauth.SaveCredentialsFile("mycreds.txt")
+gauth.SaveCredentialsFile("DBCRD.txt")
 drive = GoogleDrive(gauth)
 lugar_del_archivo = os.path.dirname(os.path.abspath(__file__))
 archivo1 = os.path.join(lugar_del_archivo, "world.zip")
